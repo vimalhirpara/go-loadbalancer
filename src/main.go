@@ -44,8 +44,8 @@ func NewLoadBalancer(port string, servers []Server) *LoadBalancer {
 func handleErr(err error) {
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
+		os.Exit(1)
 	}
-	os.Exit(1)
 }
 
 func (s *simpleServer) Address() string {
@@ -84,7 +84,7 @@ func main() {
 		newSimpleServer("https://duckduckgo.com"),
 	}
 
-	lb := NewLoadBalancer(":8000", Servers)
+	lb := NewLoadBalancer("8000", Servers)
 
 	handleRedirect := func(w http.ResponseWriter, r *http.Request) {
 		lb.serverProxy(w, r)
